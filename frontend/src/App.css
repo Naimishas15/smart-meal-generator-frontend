@@ -1,0 +1,57 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+}
+
+h1 {
+  color: #2c3e50;
+}
+
+.meal-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meal-form input,
+.meal-form select {
+  width: 300px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+}
+
+.meal-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.meal-form button:hover {
+  background-color: #0056b3;
+}
+
+.google-login {
+  background-color: #db4437;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.output {
+  margin-top: 40px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -4,8 +4,7 @@ import './App.css';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-const [refineInput, setRefineInput] = useState('');
-const [refinedMeal, setRefinedMeal] = useState('');
+
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -22,6 +21,8 @@ function Dashboard() {
   const [filterMealType, setFilterMealType] = useState('');
   const [filterDiet, setFilterDiet] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [refineInput, setRefineInput] = useState('');
+  const [refinedMeal, setRefinedMeal] = useState('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {

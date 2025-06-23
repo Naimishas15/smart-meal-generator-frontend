@@ -233,7 +233,31 @@ function Dashboard() {
         <input type="file" accept="image/*" onChange={handleImageUpload} />
         <button onClick={handleSubmit}>Generate Meal</button>
       </div>
-  
+      {mealPlan && (
+        <div className="output">
+          <h2>Suggested Meal</h2>
+          <pre style={{ whiteSpace: 'pre-wrap' }}>{mealPlan}</pre>
+
+          <div className="refine-chat">
+            <h3>💬 Refine this Meal</h3>
+            <input
+              type="text"
+              placeholder="e.g. Make this gluten-free"
+              value={refineInput}
+              onChange={(e) => setRefineInput(e.target.value)}
+            />
+            <button onClick={handleRefine}>Ask</button>
+
+            {refinedMeal && (
+              <div className="output">
+                <h4>Refined Suggestion</h4>
+                <pre style={{ whiteSpace: 'pre-wrap' }}>{refinedMeal}</pre>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+          
       {/* Saved Meals Section */}
       {savedMeals.length > 0 && (
         <div className="saved-meals">

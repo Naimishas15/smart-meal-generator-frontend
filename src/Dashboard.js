@@ -138,7 +138,7 @@ function Dashboard() {
   });
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container colorful">
       {isLoading && <div className="spinner-overlay"><div className="spinner" /></div>}
 
       <div className="dashboard-header">
@@ -153,6 +153,11 @@ function Dashboard() {
       </div>
 
       <form className="meal-form" onSubmit={handleSubmit}>
+        <div className="chip-container">
+          {formData.ingredients.split(',').map((ingredient, index) => (
+            <span key={index} className="chip">{ingredient.trim()}</span>
+          ))}
+        </div>
         <input type="text" name="ingredients" placeholder="Ingredients" value={formData.ingredients} onChange={handleChange} />
         <input type="number" name="calorieGoal" placeholder="Calorie Goal" value={formData.calorieGoal} onChange={handleChange} />
         <select name="mealType" value={formData.mealType} onChange={handleChange}>
@@ -206,27 +211,34 @@ function Dashboard() {
           </div>
 
           <div className="meal-grid">
-            {filteredMeals.map(item => (
-              <div key={item.requestId} className="meal-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <strong>{item.mealType.toUpperCase()}</strong>
-                  <button onClick={() => handleFavoriteToggle(item.requestId, item.isFavorite)}>
-                    {item.isFavorite ? '★ Unfavorite' : '☆ Favorite'}
-                  </button>
+            {filteredMeals.map(item => {
+              const userIngredients = formData.ingredients.toLowerCase().split(',').map(i => i.trim());
+              const missingIngredients = item.ingredients.split(',').map(i => i.trim()).filter(i => !userIngredients.includes(i.toLowerCase()));
+              return (
+                <div key={item.requestId} className="meal-card colorful-card">
+                  <div className="meal-header">
+                    <strong>{item.mealType.toUpperCase()}</strong>
+                    <button onClick={() => handleFavoriteToggle(item.requestId, item.isFavorite)}>
+                      {item.isFavorite ? '★' : '☆'}
+                    </button>
+                  </div>
+                  <p><strong>Ingredients:</strong> {item.ingredients}</p>
+                  {missingIngredients.length > 0 && (
+                    <p className="missing"><strong>Missing:</strong> {missingIngredients.join(', ')}</p>
+                  )}
+                  <p><strong>Calories:</strong> {item.calorieGoal}</p>
+                  <p><strong>Diet:</strong> {item.dietaryPreference}</p>
+                  <pre style={{ whiteSpace: 'pre-wrap' }}>{item.meal}</pre>
+                  <button onClick={() => handleDelete(item.requestId)} className="delete-btn">Delete</button>
                 </div>
-                <p><strong>Ingredients:</strong> {item.ingredients}</p>
-                <p><strong>Calories:</strong> {item.calorieGoal}</p>
-                <p><strong>Diet:</strong> {item.dietaryPreference}</p>
-                <pre style={{ whiteSpace: 'pre-wrap' }}>{item.meal}</pre>
-                <button onClick={() => handleDelete(item.requestId)} style={{ color: 'red' }}>Delete</button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
 
-      <footer style={{ marginTop: '40px', fontSize: '12px', color: '#888' }}>
-        <p>Smart Meal Generator • Week 4 • React + Node + OpenAI + Firebase + AWS</p>
+      <footer className="footer">
+        <p>Smart Meal Generator • Colorful Edition • React + Node + OpenAI + Firebase + AWS</p>
       </footer>
     </div>
   );

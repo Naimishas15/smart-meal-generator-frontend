@@ -147,8 +147,10 @@ body {
 }
 
 .colorful-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
+
 
 
 /* Missing ingredients */
@@ -172,12 +174,15 @@ body {
 
 /* Badge colors */
 .badge {
-  padding: 5px 10px;
+  display: inline-block;
+  padding: 6px 12px;
   color: white;
-  border-radius: 12px;
-  text-transform: uppercase;
+  border-radius: 20px;
   font-size: 0.75rem;
+  margin: 0 5px 5px 0;
+  text-transform: capitalize;
 }
+
 .breakfast { background: #f59e0b; }
 .lunch     { background: #10b981; }
 .dinner    { background: #3b82f6; }
@@ -205,25 +210,31 @@ footer {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
   margin-bottom: 30px;
 }
-/* Enhance refine input section */
 .refine-chat {
   background: #fffbe6;
-  padding: 16px;
-  margin-top: 20px;
+  padding: 20px;
   border-radius: 10px;
   border-left: 4px solid #f59e0b;
+  margin-top: 30px;
+}
+
+.refine-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .refine-chat input {
-  width: 70%;
-  padding: 8px;
-  margin-right: 10px;
+  flex: 1;
+  padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .refine-chat button {
-  padding: 8px 16px;
+  padding: 10px 16px;
   background: #3b82f6;
   color: white;
   border: none;
@@ -235,10 +246,28 @@ footer {
 .refine-chat button:hover {
   background: #2563eb;
 }
+
 .delete-btn {
-  background-color: #f44336;
+  background-color: #ef4444;
   color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
 }
+
 .delete-btn:hover {
-  background-color: #c62828;
+  background-color: #dc2626;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.output, .refine-chat {
+  animation: fadeIn 0.5s ease-in-out;
 }

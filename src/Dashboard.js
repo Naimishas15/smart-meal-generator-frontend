@@ -247,13 +247,15 @@ function Dashboard() {
 
           <div className="refine-chat">
             <h3>💬 Refine this Meal</h3>
-            <input
-              type="text"
-              placeholder="e.g. Make this gluten-free"
-              value={refineInput}
-              onChange={(e) => setRefineInput(e.target.value)}
-            />
-            <button onClick={handleRefine}>Ask</button>
+            <div className="refine-row">
+              <input
+                type="text"
+                placeholder="e.g. Make this gluten-free"
+                value={refineInput}
+                onChange={(e) => setRefineInput(e.target.value)}
+              />
+              <button onClick={handleRefine}>Ask</button>
+            </div>
 
             {refinedMeal && (
               <div className="output">
@@ -262,6 +264,7 @@ function Dashboard() {
               </div>
             )}
           </div>
+
         </div>
       )}
 
@@ -299,19 +302,29 @@ function Dashboard() {
               return (
                 <div key={item.requestId} className="meal-card colorful-card">
                   <div className="meal-header">
-                    <strong>{item.mealType.toUpperCase()}</strong>
-                    <button onClick={() => handleFavoriteToggle(item.requestId, item.isFavorite)}>
+                    <span className={`badge ${item.mealType}`}>{item.mealType}</span>
+                    <span className="badge" style={{ background: '#6366f1' }}>{item.dietaryPreference}</span>
+                    <button onClick={() => handleFavoriteToggle(item.requestId, item.isFavorite)} style={{ float: 'right', fontSize: '1.2rem', background: 'none', border: 'none', cursor: 'pointer' }}>
                       {item.isFavorite ? '★' : '☆'}
                     </button>
                   </div>
-                  <p><strong>Ingredients:</strong> {item.ingredients}</p>
+
+                  <p><strong>Ingredients:</strong></p>
+                  <div className="chip-container">
+                    {item.ingredients.split(',').map((ingredient, i) => (
+                      <span key={i} className="chip">{ingredient.trim()}</span>
+                    ))}
+                  </div>
+
                   {missingIngredients.length > 0 && (
                     <p className="missing"><strong>Missing:</strong> {missingIngredients.join(', ')}</p>
                   )}
+
                   <p><strong>Calories:</strong> {item.calorieGoal}</p>
-                  <p><strong>Diet:</strong> {item.dietaryPreference}</p>
+
                   <pre style={{ whiteSpace: 'pre-wrap' }}>{item.meal}</pre>
-                  <button onClick={() => handleDelete(item.requestId)} className="delete-btn">Delete</button>
+
+                  <button onClick={() => handleDelete(item.requestId)} className="delete-btn">🗑️ Delete</button>
                 </div>
               );
             })}

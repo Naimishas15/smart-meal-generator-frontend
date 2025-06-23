@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const auth = getAuth();
 
@@ -116,8 +116,12 @@ function Dashboard() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/');
+    signOut(auth).then(() => {
+      localStorage.removeItem('user');
+      navigate('/');
+    }).catch((error) => {
+      console.error('Logout error:', error);
+    });
   };
 
   const handleImageUpload = async (event) => {
@@ -174,12 +178,51 @@ function Dashboard() {
     <div className="dashboard-container colorful">
       {isLoading && <div className="spinner-overlay"><div className="spinner" /></div>}
 
-      {/* ... (header and form unchanged) ... */}
+      <header className="new-header">
+        <div className="logo-title">🍴 Smart Meals</div>
+        <nav className="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Recipes</a>
+          <a href="#">Meal Plans</a>
+          <a href="#">Community</a>
+        </nav>
+        <div className="profile-section" onClick={() => setShowDropdown(!showDropdown)}>
+          <img src={user?.photoURL} alt="Avatar" className="avatar-circle" />
+          <span className="profile-name">{user?.displayName || "User"}</span>
+          {showDropdown && (
+            <div className="dropdown-menu">
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          )}
+        </div>
+      </header>
 
+      {/* Saved Meals Section */}
       {savedMeals.length > 0 && (
         <div className="saved-meals">
           <h2>Saved Meal Plans</h2>
-          {/* ... filters unchanged ... */}
+          <div className="filters">
+            <label>
+              Meal Type:
+              <select value={filterMealType} onChange={(e) => setFilterMealType(e.target.value)}>
+                <option value="">All</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snack">Snack</option>
+              </select>
+            </label>
+            <label>
+              Dietary:
+              <select value={filterDiet} onChange={(e) => setFilterDiet(e.target.value)}>
+                <option value="">All</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten-free">Gluten-Free</option>
+                <option value="none">None</option>
+              </select>
+            </label>
+          </div>
 
           <div className="meal-grid">
             {paginatedMeals.map(item => {
@@ -229,7 +272,6 @@ function Dashboard() {
         </div>
       )}
 
-      {/* ... footer unchanged ... */}
     </div>
   );
 }

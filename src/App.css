@@ -60,6 +60,60 @@ body {
   margin-bottom: 30px;
 }
 
+.new-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 14px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.logo-title {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #2b6cb0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #2b6cb0;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #4caf50;
+}
+
+.profile-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
 .navbar-left .brand-name {
   font-size: 1.5rem;
   font-weight: bold;
@@ -149,9 +203,28 @@ body {
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 0.9rem;
+
+  /* ✅ Update 3: Smooth hover transition */
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
 .meal-card button:hover {
   background-color: #1976d2;
+
+  /* ✅ Optional: Slight pop effect on hover */
+  transform: translateY(-2px);
+}
+
+/* ✅ Update 4: Optional — if buttons have long text */
+.meal-card button {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ✅ Update 5: Add smooth animation for dropdown or dynamic buttons if applicable */
+.dropdown-menu {
+  transition: all 0.2s ease;
+  opacity: 1;
 }
 
 /* Colorful theme override */
@@ -187,6 +260,10 @@ body {
   font-weight: 500;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.08);
 }
+.chip:hover {
+  background: #e0e0e0;
+  cursor: pointer;
+}
 
 /* Badge colors */
 .badge {
@@ -201,8 +278,8 @@ body {
 
 .breakfast { background: #f59e0b; }
 .lunch     { background: #10b981; }
-dinner    { background: #3b82f6; }
-snack     { background: #ef4444; }
+.dinner    { background: #3b82f6; }
+.snack     { background: #ef4444; }
 
 /* Filters */
 .filters label {

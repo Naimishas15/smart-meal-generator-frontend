@@ -191,3 +191,11 @@ footer {
   font-size: 0.85rem;
   border-top: 1px solid #ddd;
 }
+
+.image-upload-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}

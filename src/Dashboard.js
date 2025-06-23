@@ -131,6 +131,34 @@ function Dashboard() {
     navigate('/');
   };
 
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://54.208.41.138:5001/image-to-ingredients', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      setFormData(prev => ({
+        ...prev,
+        ingredients: data.ingredients || ''
+      }));
+      alert("🎉 Ingredients detected and added!");
+    } catch (error) {
+      console.error("Error detecting ingredients:", error);
+      alert("❌ Failed to detect ingredients.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   const filteredMeals = savedMeals.filter((item) => {
     const matchMeal = filterMealType ? item.mealType === filterMealType : true;
     const matchDiet = filterDiet ? item.dietaryPreference === filterDiet : true;
@@ -153,6 +181,15 @@ function Dashboard() {
       </div>
 
       <form className="meal-form" onSubmit={handleSubmit}>
+        {/* Image Upload for Ingredient Detection */}
+        <div className="image-upload-section">
+          <h3>🖼️ Detect Ingredients from Image</h3>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+        </div>
         <div className="chip-container">
           {formData.ingredients.split(',').map((ingredient, index) => (
             <span key={index} className="chip">{ingredient.trim()}</span>

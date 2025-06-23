@@ -1,14 +1,21 @@
+// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import App from './App';
+import LoginPage from './LoginPage';
+import Dashboard from './Dashboard';
 import './index.css';
-import App from './App'; // This is the line where the error happens if App.js is incorrect
-import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<App />} />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );

@@ -1,3 +1,4 @@
+// LoginPage.js
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
@@ -9,7 +10,9 @@ function LoginPage() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user) navigate('/dashboard');
+    if (user) {
+      navigate('/dashboard');
+    }
   }, [navigate]);
 
   const handleGoogleLogin = async () => {
@@ -18,23 +21,13 @@ function LoginPage() {
       const user = {
         email: result.user.email,
         name: result.user.displayName,
-        photoURL: result.user.photoURL
+        photoURL: result.user.photoURL,
       };
       localStorage.setItem('user', JSON.stringify(user));
       navigate('/dashboard');
     } catch (error) {
-      console.error("Google login failed:", error);
+      console.error('Google login failed:', error);
     }
-  };
-
-  const handleGuestLogin = () => {
-    const dummyUser = {
-      email: 'guest@smartmeals.com',
-      name: 'Smart Eater',
-      photoURL: null
-    };
-    localStorage.setItem('user', JSON.stringify(dummyUser));
-    navigate('/dashboard');
   };
 
   return (
@@ -43,9 +36,7 @@ function LoginPage() {
         <div className="logo-emoji">🥗</div>
         <h1 className="login-title">Smart Meal Generator</h1>
         <p className="login-subtext animated-text">Plan your meals smartly and stay healthy</p>
-
         <button className="login-btn" onClick={handleGoogleLogin}>Sign in with Google</button>
-        <button className="login-btn guest-btn" onClick={handleGuestLogin}>Continue as Guest</button>
       </div>
     </div>
   );

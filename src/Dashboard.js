@@ -30,6 +30,7 @@ function Dashboard() {
   const fetchMealPlans = async (email) => {
     setIsLoading(true);
     try {
+      const userEmail = localStorage.getItem("userEmail") || "";
       const response = await fetch(`http://54.208.41.138:5001/get-meals?email=${userEmail}`);
       const data = await response.json();
       setSavedMeals(data.meals);

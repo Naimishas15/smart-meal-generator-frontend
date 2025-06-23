@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
 
 function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState({
     ingredients: '',
     calorieGoal: '',
@@ -18,20 +22,28 @@ function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUser(storedUser);
-      fetchMealPlans(storedUser.email);
-    } else {
-      navigate('/');
-    }
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        setUser(storedUser || firebaseUser);
+        setUserEmail(firebaseUser.email);
+        fetchMealPlans(firebaseUser.email);
+      } else {
+        navigate('/');
+      }
+    });
+    return () => unsubscribe();
   }, [navigate]);
 
   const fetchMealPlans = async (email) => {
+    if (!email) {
+      console.error('❌ userEmail is empty, cannot fetch meals.');
+      return;
+    }
     setIsLoading(true);
     try {
-      const userEmail = localStorage.getItem("userEmail") || "";
-      const response = await fetch(`http://54.208.41.138:5001/get-meals?email=${userEmail}`);
+      console.log('📧 Fetching meals for:', email);
+      const response = await fetch(`http://54.208.41.138:5001/get-meals?email=${email}`);
       const data = await response.json();
       setSavedMeals(data.meals);
     } catch (error) {
@@ -50,6 +62,10 @@ function Dashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!userEmail) {
+      console.error('❌ userEmail is missing. Cannot generate meal.');
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await fetch('http://54.208.41.138:5001/generate-meal', {
@@ -61,17 +77,17 @@ function Dashboard() {
       const mealText = data.meal || '⚠️ Failed to generate meal.';
       setMealPlan(mealText);
 
-      if (user && mealText) {
+      if (mealText) {
         await fetch('http://54.208.41.138:5001/store-meal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            email: user.email,
+            email: userEmail,
             ...formData,
             meal: mealText
           })
         });
-        await fetchMealPlans(user.email);
+        await fetchMealPlans(userEmail);
       }
     } catch (error) {
       console.error('Error generating meal:', error);
@@ -86,12 +102,12 @@ function Dashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: user.email,
+          email: userEmail,
           requestId,
           isFavorite: !currentStatus
         })
       });
-      await fetchMealPlans(user.email);
+      await fetchMealPlans(userEmail);
     } catch (error) {
       console.error('Error updating favorite:', error);
     }
@@ -102,9 +118,9 @@ function Dashboard() {
       await fetch(`http://54.208.41.138:5001/delete-meal`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user.email, requestId })
+        body: JSON.stringify({ email: userEmail, requestId })
       });
-      await fetchMealPlans(user.email);
+      await fetchMealPlans(userEmail);
     } catch (error) {
       console.error('Error deleting meal:', error);
     }

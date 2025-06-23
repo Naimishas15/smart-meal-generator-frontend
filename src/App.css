@@ -48,28 +48,48 @@ body {
   align-items: center;
   margin-bottom: 30px;
 }
+/* Modern Navbar Layout */
+.dashboard-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.navbar-left .brand-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2b6cb0;
+}
+
+.navbar-center .welcome-message {
+  font-size: 1rem;
+  color: #444;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .logout-btn {
   background-color: #f44336;
   color: white;
+  padding: 8px 12px;
   border: none;
-  padding: 10px 14px;
-  border-radius: 5px;
-  font-weight: bold;
-}
-.logout-btn:hover {
-  background-color: #d32f2f;
-}
-
-/* Avatar */
-.user-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid #4caf50;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
 }
 
+.logout-btn:hover {
+  background-color: #d32f2f;
+}
 
 /* Form */
 .meal-form {
@@ -116,13 +136,11 @@ body {
   gap: 20px;
 }
 .meal-card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-  transition: all 0.3s ease;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 8px;
 }
+
 .meal-card button {
   margin-top: 10px;
   background-color: #2196f3;
@@ -150,8 +168,6 @@ body {
   transform: translateY(-6px) scale(1.01);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
-
-
 
 /* Missing ingredients */
 .missing {
@@ -185,8 +201,8 @@ body {
 
 .breakfast { background: #f59e0b; }
 .lunch     { background: #10b981; }
-.dinner    { background: #3b82f6; }
-.snack     { background: #ef4444; }
+dinner    { background: #3b82f6; }
+snack     { background: #ef4444; }
 
 /* Filters */
 .filters label {
@@ -262,7 +278,6 @@ footer {
   background-color: #dc2626;
 }
 
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -270,4 +285,84 @@ footer {
 
 .output, .refine-chat {
   animation: fadeIn 0.5s ease-in-out;
+}
+.user-avatar {
+  transition: transform 0.2s ease;
+}
+
+.user-avatar:hover {
+  transform: scale(1.1);
+}
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+  z-index: 999;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-menu button:hover {
+  background: #f5f5f5;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 12px;
+}
+.pagination button {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.pagination button:hover {
+  background: #ddd;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 600px) {
+  .dashboard-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .meal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-container {
+    padding: 20px 12px;
+  }
+}
+
+/* Scrollbar Styling */
+.meal-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.meal-card::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+
+/* Accessibility */
+button:focus {
+  outline: 2px solid #4caf50;
+  outline-offset: 2px;
 }

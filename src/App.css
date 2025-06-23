@@ -61,12 +61,15 @@ body {
 }
 
 /* Avatar */
-.user-avatar, .avatar {
-  width: 40px;
-  height: 40px;
+.user-avatar {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+  border: 2px solid #4caf50;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
 
 /* Form */
 .meal-form {
@@ -134,16 +137,19 @@ body {
 }
 
 /* Colorful theme override */
-.colorful .meal-card {
-  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-  color: #333;
-  font-weight: 500;
-  border: 2px solid #ffd3b6;
+.colorful-card {
+  background: linear-gradient(135deg, #fef6e4, #e0f7fa);
+  border-left: 6px solid #4caf50;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s;
 }
-.colorful .meal-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+.colorful-card:hover {
+  transform: translateY(-4px);
 }
+
 
 /* Missing ingredients */
 .missing {
@@ -199,27 +205,40 @@ footer {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
   margin-bottom: 30px;
 }
+/* Enhance refine input section */
 .refine-chat {
+  background: #fffbe6;
+  padding: 16px;
   margin-top: 20px;
-  padding: 20px;
-  background: #fefefe;
-  border: 1px solid #ddd;
   border-radius: 10px;
+  border-left: 4px solid #f59e0b;
 }
 
 .refine-chat input {
-  padding: 10px;
-  width: 80%;
+  width: 70%;
+  padding: 8px;
   margin-right: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
 .refine-chat button {
-  padding: 10px 16px;
-  border: none;
-  background: #4caf50;
+  padding: 8px 16px;
+  background: #3b82f6;
   color: white;
+  border: none;
   border-radius: 6px;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.refine-chat button:hover {
+  background: #2563eb;
+}
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+.delete-btn:hover {
+  background-color: #c62828;
 }

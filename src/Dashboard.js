@@ -30,7 +30,7 @@ function Dashboard() {
   const fetchMealPlans = async (email) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5001/get-meals?email=${email}`);
+      const response = await fetch(`http://54.208.41.138:5001/get-meals?email=${userEmail}`);
       const data = await response.json();
       setSavedMeals(data.meals);
     } catch (error) {
@@ -51,7 +51,7 @@ function Dashboard() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5001/generate-meal', {
+      const response = await fetch('http://54.208.41.138:5001/generate-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -61,7 +61,7 @@ function Dashboard() {
       setMealPlan(mealText);
 
       if (user && mealText) {
-        await fetch('http://localhost:5001/store-meal', {
+        await fetch('http://54.208.41.138:5001/store-meal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -81,7 +81,7 @@ function Dashboard() {
 
   const handleFavoriteToggle = async (requestId, currentStatus) => {
     try {
-      await fetch('http://localhost:5001/favorite-meal', {
+      await fetch('http://54.208.41.138:5001/favorite-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -98,7 +98,7 @@ function Dashboard() {
 
   const handleDelete = async (requestId) => {
     try {
-      await fetch(`http://localhost:5001/delete-meal`, {
+      await fetch(`http://54.208.41.138:5001/delete-meal`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email, requestId })

@@ -196,7 +196,44 @@ function Dashboard() {
           )}
         </div>
       </header>
-
+      <div className="meal-form">
+        <h2>Generate Meal Plan</h2>
+        <input
+          type="text"
+          name="ingredients"
+          placeholder="Enter ingredients (comma-separated)"
+          value={formData.ingredients}
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          name="calorieGoal"
+          placeholder="Enter calorie goal"
+          value={formData.calorieGoal}
+          onChange={handleChange}
+        />
+        <select name="mealType" value={formData.mealType} onChange={handleChange}>
+          <option value="">Select meal type</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snack">Snack</option>
+        </select>
+        <select
+          name="dietaryPreference"
+          value={formData.dietaryPreference}
+          onChange={handleChange}
+        >
+          <option value="">Select dietary preference</option>
+          <option value="None">None</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Gluten-Free">Gluten-Free</option>
+        </select>
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <button onClick={handleSubmit}>Generate Meal</button>
+      </div>
+  
       {/* Saved Meals Section */}
       {savedMeals.length > 0 && (
         <div className="saved-meals">

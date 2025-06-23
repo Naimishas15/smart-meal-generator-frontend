@@ -199,3 +199,27 @@ footer {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
   margin-bottom: 30px;
 }
+.refine-chat {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.refine-chat input {
+  padding: 10px;
+  width: 80%;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.refine-chat button {
+  padding: 10px 16px;
+  border: none;
+  background: #4caf50;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}

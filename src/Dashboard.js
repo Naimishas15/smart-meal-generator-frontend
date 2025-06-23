@@ -4,6 +4,8 @@ import './App.css';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
+const [refineInput, setRefineInput] = useState('');
+const [refinedMeal, setRefinedMeal] = useState('');
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -158,6 +160,27 @@ function Dashboard() {
     }
   };
 
+  const handleRefine = async () => {
+    if (!mealPlan || !refineInput) return;
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://54.208.41.138:5001/refine-meal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          previousMeal: mealPlan,
+          userMessage: refineInput
+        })
+      });
+      const data = await response.json();
+      setRefinedMeal(data.refinedMeal || "No response");
+    } catch (error) {
+      console.error("Error refining meal:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   const filteredMeals = savedMeals.filter((item) => {
     const matchMeal = filterMealType ? item.mealType === filterMealType : true;
@@ -215,11 +238,32 @@ function Dashboard() {
       </form>
 
       {mealPlan && (
-        <div className="output">
-          <h2>Suggested Meal</h2>
-          <pre style={{ whiteSpace: 'pre-wrap' }}>{mealPlan}</pre>
+        <div>
+          <div className="output">
+            <h2>Suggested Meal</h2>
+            <pre style={{ whiteSpace: 'pre-wrap' }}>{mealPlan}</pre>
+          </div>
+
+          <div className="refine-chat">
+            <h3>💬 Refine this Meal</h3>
+            <input
+              type="text"
+              placeholder="e.g. Make this gluten-free"
+              value={refineInput}
+              onChange={(e) => setRefineInput(e.target.value)}
+            />
+            <button onClick={handleRefine}>Ask</button>
+
+            {refinedMeal && (
+              <div className="output">
+                <h4>Refined Suggestion</h4>
+                <pre style={{ whiteSpace: 'pre-wrap' }}>{refinedMeal}</pre>
+              </div>
+            )}
+          </div>
         </div>
       )}
+
 
       {savedMeals.length > 0 && (
         <div className="saved-meals">
